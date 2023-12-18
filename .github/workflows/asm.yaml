@@ -24,7 +24,7 @@ jobs:
           options: -v ${{ github.workspace }}:/tmp
           run: |
             ls /tmp -a
-            cd /tmp/home/runner/work/sshd-rando/sshd-rando/asm
+            cd /tmp/asm
             cp -r ./patches/diffs actual-patch-diffs
             cp -r ./additions/diffs actual-additions-diffs
             python assemble.py
