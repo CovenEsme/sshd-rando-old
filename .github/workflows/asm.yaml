@@ -1,0 +1,51 @@
+name: ASM
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.10"]
+    defaults:
+      run:
+        working-directory: ./asm
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install pacman
+        run: |
+          wget https://apt.devkitpro.org/install-devkitpro-pacman
+          chmod +x ./install-devkitpro-pacman
+          sudo ./install-devkitpro-pacman
+      - name: Install devkitPro
+        run: sudo pacman -S switch-dev --noconfirm
+      - name: Copy existing asm diffs
+        run: |
+          cp patches/diffs actual-patch-diffs
+          cp additions/diffs actual-additions-diffs
+      - name: Run assemble.py
+        run: python assemble.py
+      - name: Compare patches diffs
+        run: |
+          DIFF=$(diff -qr actual-patch-diffs patches/diffs) 
+          if [ "$DIFF" != "" ] 
+          then
+              echo "Patches diffs did not match"
+              echo "If you are sure you ran assemble.py before pushing, make sure to update devkitPro"
+              echo "QUICKFIX: update devkitPro"
+              exit 1
+          fi
+      - name: Compare additions diffs
+        run: |
+          DIFF=$(diff -qr actual-additions-diffs additions/diffs) 
+          if [ "$DIFF" != "" ] 
+          then
+              echo "Patches diffs did not match"
+              echo "If you are sure you ran assemble.py before pushing, make sure to update devkitPro"
+              echo "QUICKFIX: update devkitPro"
+              exit 1
+          fi
