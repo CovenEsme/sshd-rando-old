@@ -45,8 +45,12 @@ jobs:
             DIFF=$(diff -qr actual-additions-diffs additions/diffs)
             if [ "$DIFF" != "" ]
             then
+                echo "Diff:"
+                echo $DIFF
+                echo
                 echo "Patches diffs did not match"
                 echo "If you are sure you ran assemble.py before pushing, make sure to update devkitPro"
+                echo
                 echo "QUICKFIX: update devkitPro"
                 exit 1
             fi
