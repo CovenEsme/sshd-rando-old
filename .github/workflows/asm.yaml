@@ -21,10 +21,10 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: devkitpro/devkita64
-          options: -v ${{ github.workspace }}:/tmp
+          options: -v ${{ github.workspace }}:/docker-temp
           run: |
-            ls /tmp -a
-            cd /tmp/asm
+            ls /docker-temp -a
+            cd /docker-temp/asm
             cp -r ./patches/diffs actual-patch-diffs
             cp -r ./additions/diffs actual-additions-diffs
             sudo apt -y update
