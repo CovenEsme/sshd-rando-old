@@ -28,7 +28,7 @@ jobs:
             cp -r ./patches/diffs actual-patch-diffs
             cp -r ./additions/diffs actual-additions-diffs
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-            source "$HOME/.cargo/env"
+            . "$HOME/.cargo/env"
             sudo apt -y update
             sudo apt -y install python3-pip
             pip install --no-cache-dir --upgrade pip
