@@ -29,30 +29,35 @@ jobs:
             cp -r ./additions/diffs actual-additions-diffs
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
             . "$HOME/.cargo/env"
+            rustup update
             sudo apt -y update
             sudo apt -y install python3-pip
             pip install --no-cache-dir --upgrade pip
             pip install --no-cache-dir -r ../req-dev-requirements.txt
             python3 assemble.py
-            DIFF=$(diff -qr actual-patch-diffs patches/diffs)
+            DIFF=$(diff -r actual-patch-diffs patches/diffs)
             if [ "$DIFF" != "" ]
             then
-                echo "Patches diffs did not match"
-                echo "If you are sure you ran assemble.py before pushing, make sure to update devkitPro"
-                echo "QUICKFIX: update devkitPro and re-run assemble.py"
-                exit 1
+              echo "Diff:"
+              echo $DIFF
+              echo
+              echo "Patches diffs did not match"
+              echo "If you are sure you ran assemble.py before pushing, make sure to update devkitPro"
+              echo
+              echo "QUICKFIX: update devkitPro and re-run assemble.py"
+              exit 1
             fi
             DIFF=$(diff -r actual-additions-diffs additions/diffs)
             if [ "$DIFF" != "" ]
             then
-                echo "Diff:"
-                echo $DIFF
-                echo
-                echo "Patches diffs did not match"
-                echo "If you are sure you ran assemble.py before pushing, make sure to update devkitPro"
-                echo
-                echo "QUICKFIX: update devkitPro"
-                exit 1
+              echo "Diff:"
+              echo $DIFF
+              echo
+              echo "Patches diffs did not match"
+              echo "If you are sure you ran assemble.py before pushing, make sure to update devkitPro"
+              echo
+              echo "QUICKFIX: update devkitPro"
+              exit 1
             fi
 
       # - name: Get DEVKITARM env var
