@@ -42,7 +42,7 @@ jobs:
                 echo "QUICKFIX: update devkitPro and re-run assemble.py"
                 exit 1
             fi
-            DIFF=$(diff -qr actual-additions-diffs additions/diffs)
+            DIFF=$(diff -r actual-additions-diffs additions/diffs)
             if [ "$DIFF" != "" ]
             then
                 echo "Diff:"
