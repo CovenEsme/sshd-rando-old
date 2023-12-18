@@ -88,14 +88,14 @@ linker = "aarch64-none-elf-ld"
 objcopy = "aarch64-none-elf-objcopy"
 
 if sys.platform == "win32":
-    devkitA64 = Path("C:/") / "devkitpro" / "devkitA64"
+    devkitpro = Path("C:/") / "devkitpro"
     assembler += EXE
     linker += EXE
     objcopy += EXE
 else:
-    devkitA64 = Path(os.environ.get("DEVKITARM"))
+    devkitpro = Path("/") / "opt" / "devkitpro"
 
-devkitA64 = devkitA64 / "bin"
+devkitA64 = devkitpro / "devkitA64" / "bin"
 
 devkitA64_assembler = devkitA64 / assembler
 devkitA64_linker = devkitA64 / linker
@@ -103,6 +103,11 @@ devkitA64_objcopy = devkitA64 / objcopy
 
 DEVKIT_DIR_NOT_FOUND_HELP = "Please visit https://devkitpro.org/wiki/devkitPro_pacman for installation instructions."
 DEVKIT_FILE_NOT_FOUND_HELP = "On Windows, devkitA64 should be installed to: C:\\devkitPro\\devkitA64. On other operating systems, the DEVKITA64 environment variable should be declared."
+
+if not devkitpro.is_dir():
+    raise FileNotFoundError(
+        f"Failed to find devkitpro at {devkitpro}. {DEVKIT_DIR_NOT_FOUND_HELP}"
+    )
 
 if not devkitA64.is_dir():
     raise FileNotFoundError(
