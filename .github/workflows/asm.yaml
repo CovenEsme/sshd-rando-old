@@ -21,8 +21,9 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: devkitpro/devkita64
-          options: -v ${{ github.workspace }}:~
+          options: -v ${{ github.workspace }}:/tmp
           run: |
+            cd /tmp/home/runner/work/sshd-rando/sshd-rando/asm
             cp -r ./patches/diffs actual-patch-diffs
             cp -r ./additions/diffs actual-additions-diffs
             python assemble.py
