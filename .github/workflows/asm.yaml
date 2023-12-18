@@ -16,13 +16,10 @@ jobs:
         working-directory: ./asm
     steps:
       - uses: actions/checkout@v3
-      - name: Install pacman
-        run: |
-          wget https://apt.devkitpro.org/install-devkitpro-pacman
-          chmod +x ./install-devkitpro-pacman
-          sudo ./install-devkitpro-pacman
+      - name: Setup devkitPro Docker
+        run: docker pull devkitpro/devkita64
       - name: Install devkitPro
-        run: sudo pacman -S switch-dev --noconfirm
+        run: docker run devkitpro/devkita64
       - name: Copy existing asm diffs
         run: |
           cp patches/diffs actual-patch-diffs
