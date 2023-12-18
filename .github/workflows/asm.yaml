@@ -22,7 +22,7 @@ jobs:
         run: docker run devkitpro/devkita64
       - name: Get DEVKITARM env var
         run: |
-          ENV DEVKITARM=$(exec container env | grep DEVKITARM)
+          ENV DEVKITARM=$(docker exec devkitpro/devkita64 env | grep DEVKITARM)
       - name: Copy existing asm diffs
         run: |
           ls
