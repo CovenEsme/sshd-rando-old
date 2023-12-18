@@ -22,10 +22,10 @@ jobs:
         run: docker run devkitpro/devkita64
       - name: Get DEVKITARM env var
         run: |
-          DEVKITARM=$(docker exec devkitpro/devkita64 env | grep DEVKITARM)
+          docker ps --format "{{.Names}}"
+          DEVKITARM=$(docker exec devkitpro/devkita64 env | grep DEVKITARM | cut -d'=' -f2)
       - name: Copy existing asm diffs
         run: |
-          ls
           cp -r ./patches/diffs actual-patch-diffs
           cp -r ./additions/diffs actual-additions-diffs
       - name: Run assemble.py
