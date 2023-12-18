@@ -39,7 +39,7 @@ jobs:
             then
                 echo "Patches diffs did not match"
                 echo "If you are sure you ran assemble.py before pushing, make sure to update devkitPro"
-                echo "QUICKFIX: update devkitPro"
+                echo "QUICKFIX: update devkitPro and re-run assemble.py"
                 exit 1
             fi
             DIFF=$(diff -qr actual-additions-diffs additions/diffs)
