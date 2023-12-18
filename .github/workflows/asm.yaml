@@ -22,8 +22,9 @@ jobs:
         run: docker run devkitpro/devkita64
       - name: Copy existing asm diffs
         run: |
-          cp -r patches/diffs actual-patch-diffs
-          cp -r additions/diffs actual-additions-diffs
+          ls
+          cp -r ./patches/diffs actual-patch-diffs
+          cp -r ./additions/diffs actual-additions-diffs
       - name: Run assemble.py
         run: python assemble.py
       - name: Compare patches diffs
